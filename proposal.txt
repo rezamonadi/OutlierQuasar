@@ -1,0 +1,16 @@
+Proposal (1st draft)
+Given: 
+    - Quasar catalog including measured properties of more than 750k objects in [dr16q](https://www.sdss.org/dr16/algorithms/qso_catalog/) 
+    - 1D image of each quasars as their spectrum available in [SDSS](https://www.sdss.org/dr16/spectro)
+    
+- We use:
+    - 4 outlier detection methods (**TBD**) 
+    - to find outlier quasars in the main catalog.
+    -  Quasars should be classified first based on the known classes of quasars like obscured, unobscured, red, blue. 
+    - Outliers in each class should be identified. 
+    
+- Evaluation: 
+    - Finally, outliers in each class should be visually inspected by looking their spectra to see why they have been labeled as outliers. 
+
+Group member labour division: 
+1) Reza Monadi: Implementing Kohonen self-organized maps to reduce the dimentionality of data and find outliers. Create 
