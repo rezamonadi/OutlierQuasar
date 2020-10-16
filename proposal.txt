@@ -13,4 +13,7 @@ Given:
     - Finally, outliers in each class should be visually inspected by looking their spectra to see why they have been labeled as outliers. 
 
 Group member labour division: 
-1) Reza Monadi: Implementing Kohonen self-organized maps to reduce the dimentionality of data and find outliers. Create 
+1) Reza Monadi  : Implementing Kohonen self-organized maps to reduce the dimentionality of data and find outliers. 
+2) Hasin Us Sami: Implementing Density-Based Spatial Clustering to detect outliers.
+3)
+4)
