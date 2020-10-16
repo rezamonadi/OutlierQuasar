@@ -1,18 +1,48 @@
-Proposal (1st draft)
-Given: 
-    - Quasar catalog including measured properties of more than 750k objects in [dr16q](https://www.sdss.org/dr16/algorithms/qso_catalog/) 
-    - 1D image of each quasars as their spectrum available in [SDSS](https://www.sdss.org/dr16/spectro)
-    
-- We use:
-    - 4 outlier detection methods (**TBD**) 
-    - to find outlier quasars in the main catalog.
-    -  Quasars should be classified first based on the known classes of quasars like obscured, unobscured, red, blue. 
-    - Outliers in each class should be identified. 
-    
-- Evaluation: 
-    - Finally, outliers in each class should be visually inspected by looking their spectra to see why they have been labeled as outliers. Their spectra will be compared to the spectra of typical outliers to to visually identify the difference in pattern.
 
-Group member labour division: 
+# Project Proposal: **Identifying outliers in the latest quasar catalog**
+---
+## Group members:
+1. Reza Monadi
+2. Arman Irani
+3. Terrance Kuo
+4. Hasin Us Sami
+---
+## Scientific Background 
+
+Quasars are a class of galaxies with a super massive black hole at their center of hosting galaxy. The black hole devours surrounding material and converts them to energy which we receive that as electromagnetic radiation in different wavelengths which is a quasar's spectrum. This spectrum has some absorption and emission  features that maybe different throughout quasars due to different physical condition that a particular quasar has. 
+ 
+
+## Scientific Justification
+The main purpose of this project is to find those quasars which are less similar to the typical normal quasars. These outliers can be simply some objects that are mistakenly classified as a quasar in the catalog or they can be representative of a class of very interesting quasars that the current astronomical models cannot explain them. In either cases identifying outliers will be beneficial. We are going to use a variety of outlier detection algorithms for identifying outliers. In this case we can compare the results of each algorithm and be  confident when more algorithms are consistent about a particular quasar as an outlier. 
+Because the overall shape of the 1D image of a quasar (spectrum) depends on its color, we separate quasars first based on their color smd then find outliers in each class.
+
+---
+
+## Data 
+The latest quasar catalogue ([dr16q](https://www.sdss.org/dr16/algorithms/qso_catalog/)) includes lots of information about individual quasars obtained by analyzing their spectra. 
+We also have access to the spectra of individual quasars in dr16q publicly available in Sloan Digital Sky Server webpage ([SDSS](https://www.sdss.org/dr16/spectro)). 
+
+---
+## Evaluation 
+
+- There are previous outlier analyses performed on former quasars catalogs. We can compare our results with them. 
+- Outliers in each class should be visually inspected by looking their spectra to see why they have been labeled as outliers. We do this by
+    stacking the individual 1D images of all quasars in each cluster and compare 
+    it with median 1D image of a normal quasars which there are many of them in the data set.
+
+- The output of different algorithms we are implementing might be different. This let us to compare the performance of each algorithm. 
+    
+
+
+## Group member labour division: 
+
+The data set has 750,414 quasars with 183 features. However, we will use a subset of relevant features as our study. We need to pre-process the feature space by feature selection and normalization. Then we will apply the following outlier analyses:
+
+-  Reza Monadi: Implementing Kohonen self-organized maps to reduce the dimentionality of the data and use it for visualizing the outliers found by other methods.  
+- Arman Irani: 
+- Hasin Us Sami: 
+- Terrance Kuo: 
+
 1) Reza Monadi  : Implementing Kohonen self-organized maps to reduce the dimentionality of data and find outliers. 
 2) Hasin Us Sami: Implementing Density-Based Spatial Clustering to detect outliers.
 3) Arman Irani: Isolation forest
