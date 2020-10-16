@@ -10,7 +10,7 @@ Given:
     - Outliers in each class should be identified. 
     
 - Evaluation: 
-    - Finally, outliers in each class should be visually inspected by looking their spectra to see why they have been labeled as outliers. 
+    - Finally, outliers in each class should be visually inspected by looking their spectra to see why they have been labeled as outliers. Their spectra will be compared to the spectra of typical outliers to to visually identify the difference in pattern.
 
 Group member labour division: 
 1) Reza Monadi  : Implementing Kohonen self-organized maps to reduce the dimentionality of data and find outliers. 
