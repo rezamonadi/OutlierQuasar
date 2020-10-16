@@ -7,6 +7,9 @@
 3. Terrance Kuo
 4. Hasin Us Sami
 ---
+Given a catalogue of 750,414 quasars, we will use four different outlier detection methods to identify those quasars 
+that are very different from the majority of population. Possibly these outlier quasars make some challenges about
+the current models; thereby this gives insight into future research opportunities.
 ## Scientific Background 
 
 Quasars are a class of galaxies with a super massive black hole at their center of hosting galaxy. 
@@ -48,11 +51,6 @@ We also have access to the spectra of individual quasars in dr16q publicly avail
 
 The data set has 750,414 quasars with 183 features. However, we will use a subset of relevant features as our study.
 We need to pre-process the feature space by feature selection and normalization. Then we will apply the following outlier analyses:
-
--  Reza Monadi: Implementing Kohonen self-organized maps to reduce the dimentionality of the data and use it for visualizing the outliers found by other methods.  
-- Arman Irani: 
-- Hasin Us Sami:Implementing Density-Based Spatial Clustering to detect outliers.
-- Terrance Kuo: 
 
 1) Reza Monadi  : Implementing Kohonen self-organized maps to reduce the dimentionality of data and find outliers. 
 2) Hasin Us Sami: Implementing Density-Based Spatial Clustering to detect outliers.
