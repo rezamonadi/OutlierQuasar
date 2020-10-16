@@ -57,4 +57,8 @@ We need to pre-process the feature space by feature selection and normalization.
 
 
 ## Relation to Reza Monadi's thesis project
-One of the projects in my thesis is about studying extremely red quasars (ERQs). The main purpose of ERQ project is to see if ERQs are outlier or just extreme cases of the main population. Our data set here, however, is different and the type of outlier we are going to find is not known before hand. Moreover, the physical parameters which build our feature space is different here. This project can help me if we find some outliers that happen to be also ERQs. 
+One of the projects in my thesis is about studying extremely red quasars (ERQs). 
+The main purpose of ERQ project is to see if ERQs are outlier or just extreme cases 
+of the main population. Our data set here, however, is different and the type of outlier we are 
+going to find is not known before hand. Moreover, the physical parameters which build our feature 
+space is different here. This project can help me if we find some outliers that happen to be also ERQs. 
