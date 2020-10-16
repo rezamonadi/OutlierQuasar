@@ -7,26 +7,24 @@
 3. Terrance Kuo
 4. Hasin Us Sami
 ---
+## Project Summary
 Given a catalogue of 750,414 quasars, we will use four different outlier detection methods to identify those quasars 
-that are very different from the majority of population. Possibly these outlier quasars make some challenges about
-the current models; thereby this gives insight into future research opportunities.
+that are very different from the majority of quasars' population. Finding these outlier quasar gives insight into future research opportunities by proposing a modification for current astronomical models for quasars. 
 ## Scientific Background 
 
-Quasars are a class of galaxies with a super massive black hole at their center of hosting galaxy. 
-The black hole devours surrounding material and converts them to energy which we receive that as electromagnetic radiation 
-in different wavelengths which is a quasar's spectrum. This spectrum has some absorption and emission  
-features that maybe different throughout quasars due to different physical condition that a particular quasar has. 
- 
+Quasars are a class of galaxies with a super massive black hole at the center. The black hole devours surrounding materials and converts them to electromagnetic radiation 
+in different wavelengths. We call this 1D image a *quasar's spectrum*. This spectrum has some absorption and emission  
+features that maybe different throughout quasars due to their different physical conditions.
 
 ## Scientific Justification
 The main purpose of this project is to find those quasars which are less similar to the typical normal quasars. 
-These outliers can be simply some objects that are mistakenly classified as a quasar in the catalog or they can be 
-representative of a class of very interesting quasars that the current astronomical models cannot explain them. 
+These outliers can be simply some objects that are mistakenly classified as a quasar in the main catalog or they can be the
+representative of a class of very interesting objects that current astronomical models cannot explain. 
 In either cases identifying outliers will be beneficial. We are going to use a variety of outlier detection 
 algorithms for identifying outliers. In this case we can compare the results of each algorithm and be  confident 
 when more algorithms are consistent about a particular quasar as an outlier. 
 Because the overall shape of the 1D image of a quasar (spectrum) depends on its color, we separate quasars 
-first based on their color smd then find outliers in each class.
+first based on their colors and then identify outliers in each class.
 
 ---
 
@@ -47,12 +45,16 @@ We also have access to the spectra of individual quasars in dr16q publicly avail
     
 
 
-## Group member labour division: 
+## Labour division
 
 The data set has 750,414 quasars with 183 features. However, we will use a subset of relevant features as our study.
 We need to pre-process the feature space by feature selection and normalization. Then we will apply the following outlier analyses:
 
-1) Reza Monadi  : Implementing Kohonen self-organized maps to reduce the dimentionality of data and find outliers. 
-2) Hasin Us Sami: Implementing Density-Based Spatial Clustering to detect outliers.
-3) Arman Irani: Isolation forest
-4) Terrance Kuo: Agglomerative Hierarchical Clustering
+1) **Reza Monadi**: Implementing Kohonen self-organized maps to reduce the dimentionality of data and find outliers. 
+2) **Hasin Us Sami**: Implementing Density-Based Spatial Clustering to detect outliers.
+3) **Arman Irani**: Isolation forest
+4) **Terrance Kuo**: Agglomerative Hierarchical Clustering
+
+
+## Relation to Reza Monadi's thesis project
+One of the projects in my thesis is about studying extremely red quasars (ERQs). The main purpose of ERQ project is to see if ERQs are outlier or just extreme cases of the main population. Our data set here, however, is different and the type of outlier we are going to find is not known before hand. Moreover, the physical parameters which build our feature space is different here. This project can help me if we find some outliers that happen to be also ERQs. 
