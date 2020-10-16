@@ -51,7 +51,7 @@ We need to pre-process the feature space by feature selection and normalization.
 
 -  Reza Monadi: Implementing Kohonen self-organized maps to reduce the dimentionality of the data and use it for visualizing the outliers found by other methods.  
 - Arman Irani: 
-- Hasin Us Sami: 
+- Hasin Us Sami:Implementing Density-Based Spatial Clustering to detect outliers.
 - Terrance Kuo: 
 
 1) Reza Monadi  : Implementing Kohonen self-organized maps to reduce the dimentionality of data and find outliers. 
