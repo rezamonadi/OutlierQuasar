@@ -18,6 +18,7 @@ But python can deal with fits files by astropy:
 https://docs.astropy.org/en/stable/io/fits/
 
 ---
+## Astropy
 To install `astropy` you can simply run if you haven't use `anaconda`:
 
     pip install --no-deps astropy
