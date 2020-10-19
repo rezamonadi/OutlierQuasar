@@ -19,7 +19,7 @@ https://docs.astropy.org/en/stable/io/fits/
 
 ---
 ## Astropy
-To install `astropy` you can simply run if you haven't use `anaconda`:
+To install `astropy` you can simply run this if you haven't use `anaconda`:
 
     pip install --no-deps astropy
 If you used `anaconda`, astropy is already installed and you may just run this:
