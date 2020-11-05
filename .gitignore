@@ -5,7 +5,7 @@ __pycache__/
 *.fits
 *.fit
 *.csv
-
+*.dat
 
 # C extensions
 *.so
