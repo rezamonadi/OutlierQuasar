@@ -91,11 +91,11 @@ def db_par(df, eps, minPts):
     label=model.labels_
     return label
 num_cores = multiprocessing.cpu_count()
-all_labels = Parallel(n_jobs=4)(delayed(db_par)(df,0.5, j) for j in range(4,12))
+all_labels = Parallel(n_jobs=4)(delayed(db_par)(df,1.2, j) for j in range(4,12))
 
 
 # %%
 import numpy as np
-np.savetxt('all_labels.dat', all_labels, fmt='%d')
+np.savetxt('all_labels-12.dat', all_labels, fmt='%d')
 
 
