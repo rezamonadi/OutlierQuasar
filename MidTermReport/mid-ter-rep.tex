@@ -1,0 +1,114 @@
+\documentclass[usenatbib,a4paper,fleqn]{article}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\title{Mid-Term Report: Identifying outliers in the latest quasar catalog}
+\author{Reza Monadi, Hasin Us Sami,
+Arman Irani, Terrance Kuo}
+
+\date{\today}
+% \usepgfplotslibrary{external}
+
+\begin{document}
+\maketitle
+
+% \begin{namelist}{xxxxxxxxxxxx}
+% \item[{\bf Title:}]
+% 	A Jolly Good Thesis
+% \item[{\bf Author:}]
+% 	Robyn Owens
+% \item[{\bf Supervisor:}]
+% 	Professor Albert Einstein
+% \item[{\bf Degree:}]
+% 	MSc (24 point project) or BE(SE) (12 point project)
+% \end{namelist}
+
+\section*{Addressing proposal feedback comments}
+\begin{enumerate}
+   \item What do you exactly mean by "outliers in each class"? Are there different classes considered? How does this help the outlier detection?
+\texttt{We were thinking about grouping quasars based on their colors and then running our algorithms on each group. But this idea was refined and 
+now we run our algorithm on the full dataset. }
+\item  In the evaluation plan it is not entirely clear how success would be measured. Is it the overlap with other outliers that other studies have found?
+\texttt{Yes we compare our outlier with a previous study which  on a smaller dataset. We also test the success in these ways: 
+\begin{itemize}
+   \item Comparing the labels that different methods find, expecting they have a consensus.
+\item Comparing the spectrum of  an outlier object with the expected spectrum of inlier quasars.}
+\end{itemize}
+\item Are those 183 features derived from the spectrum? or independent? or a mix? 
+how about using the spectrum directly? It would be interesting to see what can the non-spectrum related features can do vs. the spectrum ones vs. using the spectrum directly.
+\texttt{Looking more carefully at the features we found that our study would be very limited rather than taking all features into account.
+Some features come from spectrum and some from photometry (measuring color). We decided to focus on the colors ending up with 21 features. 
+We preserve spectrum for testing our results, in a way that outliers should have spectra very different from normal objects.}
+\item How is the Agglomerative Clustering tie into the main objective? Perhaps you may want to combine it
+ with the Isolation Forest and run clustering before and after outlier reduction also as a measure of 
+ estimating to what extent you have been able to get rid of (most of) the outliers (with the argument here being that data that can be clustered better have fewer outliers) (-0.5pts)
+\texttt{Agglomerative clustering can find the main big cluster of objects by demanding very few clusters.
+ Also we compare the labels of agglomerative clustering with DBSCAN and the scores of isolation forest.}
+\end{enumerate}
+\section*{ Data Reduction and Feature selection (Reza Monadi)}
+
+We selected 7  measured fluxes available in the catalog. Each flux is proportional to the amount of 
+radiation we get from a quasar in a specific range of wavelengths. For example a quasar is red if we
+ get higher flux in longer wavelengths and lowe flux in shorter wavelengths.  Therefore, colors can be 
+ obtained by by looking at the ratio of each pair of these fluxes → colori = log(Flux1 / Flux2) 
+We use logarithm because it is easier to understand especially for very large and very small ratios. 
+For each measured flux, there is a reported variance in the catalog. Keeping only fluxes with  Signal/Noise>2 
+ we got 140,000 objects which are more reliable. Having 7 fluxes we will get 21 colors ($\frac{7\,!}{2\,!5\,!}$). 
+ However, not all of the pairs are useful, especially if two fluxes have a close range of wavelengths. 
+ We can use 10 less reliable fluxes which have wavelengths far enough from each other. Pair-plots of these 
+ 10 features show that some of them are very correlated, so we can do more dimentiolaty reduction. 
+
+\section*{ Scientific Justification}
+Implementation of DBSCAN Algorithm in Python (Hasin Us Sami)
+
+Since our project focuses on detecting outliers in quasars, or in other way, data points that deviate from the normal
+ behavior of quasars, a number of outlier detection algorithms has been studied.
+  Among them, DBSCAN (Density-Based Spatial Clustering of Applications with Noise)
+   has been chosen because it is one of the most efficient algorithms in detecting outliers. 
+Before applying self-implemented algorithm from scratch, DBSCAN built-in function 
+in python has been experimented on the pre-processed dataset with 144582 data 
+points and 21 features just to verify how much accurate this detection technique 
+would be in the case of our quasar dataset. Optimum values for DBSCAN parameters 
+have been chosen using trial and error method.  After performing DBSCAN, Principal
+Component Analysis (PCA) function mapped the data points into a 2D plane for the purpose of visualization. 
+
+\includegraphics{h1}
+
+\section*{Data }
+The latest quasar catalogue \href{https://www.sdss.org/dr16/algorithms/qso_catalog}{dr16q} includes lots of information 
+about individual quasars obtained by analyzing their spectra. 
+We also have access to the spectra of individual quasars in dr16q publicly available in Sloan Digital Sky Server webpage 
+\href{https://www.sdss.org/dr16/spectro}{SDSS}
+
+\section*{Evaluation }
+\begin{itemize}
+   \item  There are previous outlier analyses performed on former quasars catalogs. We can compare our results to them. 
+   \item  Outliers in each class should be visually inspected by looking their spectra to see why they have been labeled as outliers. We do this by
+   stacking spectra of a group of outliers which are closer to each other and then and compare 
+   it with the median spectrum of a numerous normal quasars in the catalog. 
+   \item The output of different algorithms we are implementing here might be different. This let us to compare the performance of each algorithm. 
+\end{itemize}  
+
+
+\section*{ Labour division}
+
+The data set has 750,414 quasars with 183 features. However, we will use a subset of relevant features.
+In the pre-processing we select most important features and then normalize the data. Afterwards, we will apply the following outlier analyses:
+\begin{itemize}
+ 
+\item \textbf{Hasin Us Sami}: Implementing Density-Based Spatial Clustering to detect outliers.
+\item \textbf{Arman Irani}: Isolation forest
+\item \textbf{Terrance Kuo}: Agglomerative Hierarchical Clustering
+\item  \textbf{Reza Monadi}: Implementing Kohonen self-organized maps to reduce the dimentionality of data to visualize the 
+identified outliers.
+
+\end{itemize}
+\section*{Relation to Reza Monadi's thesis project}
+One of the projects in my thesis is about studying extremely
+ red quasars (ERQs). The main purpose of ERQ project is to see if
+  ERQs are outlier or just extreme cases of the main population. 
+  Our data set here, however, is different and the type of outlier 
+  we are going to find is not known before hand. Moreover, the physical 
+  parameters which build our feature space is different here. 
+  This project can help my thesis if we find some outliers that happen to be ERQs. 
+
+\end{document}
