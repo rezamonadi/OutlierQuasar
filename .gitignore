@@ -13,7 +13,7 @@ __pycache__/
 *.JPEG
 *.mp4
 *.mpv
-*.mat 
+
 *.zip
 *.gz
 *.fits
