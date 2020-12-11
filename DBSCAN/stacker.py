@@ -37,7 +37,7 @@ def stacker(z_dr12, plate, mjd, fiberid):
         
         for i in tqdm(range(nqsos)):
         # Retrieve the spectra:
-                file = 'data/spectra/%d/spec-%d-%d-%04d.fits' % (plate[i], plate[i],mjd[i],fiberid[i])
+                file = '../data/spectra/%d/spec-%d-%d-%04d.fits' % (plate[i], plate[i],mjd[i],fiberid[i])
                 spec = readDR10spec(file)
                 wave = spec['wl']
                 wz = wave/(z_dr12[i]+1)
