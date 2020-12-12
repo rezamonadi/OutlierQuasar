@@ -7,6 +7,6 @@ Y_25 = tsne(K,'Algorithm','barneshut','Distance','euclidean',...
 Y_30 = tsne(K,'Algorithm','barneshut','Distance','euclidean',...
     'NumDimensions',2,'Theta', 0.1, 'Verbose',2, 'Perplexity',30);
 
-save('Y_20.mat',Y_20);
-save('Y_25.mat',Y_25);
-save('Y_30.mat',Y_30);
+save('../data/2dtSNE_p20.mat',Y_20);
+save('../data/2dtSNE_p25.mat',Y_25);
+save('../data/2dtSNE_p30.mat',Y_30);
