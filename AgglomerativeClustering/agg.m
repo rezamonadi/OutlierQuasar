@@ -1,25 +1,25 @@
-% clf
-% clc
-% % clear
-% % % T = readtable('../data/data_scaled.csv');%read data file
-% % % K = table2array(T);%put igscatter(Y(:,1), Y(:,2),idx)nto array
-% % % Y = tsne(K,'Algorithm','barneshut','Distance','euclidean',...
-% % %     'NumDimensions',2,'Theta', 0.1, 'Verbose',2, 'Perplexity',20);
-load('../data/Y.mat');
-% gscatter(Y_20(:,1),Y_20(:,2))
-% % 
-% % 
-% % S = linkage(Y_20,'single', 'euclidean', 'savememory','off');%get average distances
-load('S-complete-tSNE_p20.mat');
-% % 
-% % 
-cl=12;
-W = cluster(S,'maxclust',cl);%Put into 3 clusters
-% cutoff = median([S(end-2,3) S(end-1,3)]);%Make a cutoff value
-% % % % % histogram(W(W~=2))
-% dendrogram(S,'ColorThreshold',cutoff)%display as dendrogram
-cmap = colormap(jet(cl));
-% % 
+T = readtable('data.dat');%read data file
+K = table2array(T);%put into array
+numberOfDimensions = 3;%set num of dimensions to 3
+[COEFF, SCORE, LATENT, TSQUARED, EXPLAINED] = pca(K); % Perform PCA analysis
+reducedDimension = COEFF(:,1:numberOfDimensions);% Use reduced dimentions
+S = linkage(reducedDimension,'average','chebychev');%get average distances
+W = cluster(S,'maxclust',3);%Put into 3 clusters
+cutoff = median([S(end-2,3) S(end-1,3)]);%Make a cutoff value
+dendrogram(S,'ColorThreshold',cutoff)%display as dendrogram% clf
+clc
+clear
+T = readtable('../data/data_scaled.csv');%read data file
+K = table2array(T);%put igscatter(Y(:,1), Y(:,2),idx)nto array
+
+load('../data/Y.mat');% loading tSNE maped data
+S = linkage(Y_20,'single', 'euclidean', 'savememory','off');%get linkage 
+cl=12; % number of clusters
+W = cluster(S,'maxclust',cl);%Put into 12 clusters
+cutoff = median([S(end-2,3) S(end-1,3)]);%Make a cutoff value
+dendrogram(S,'ColorThreshold',cutoff)%display as dendrogram
+cmap = colormap(jet(cl)); % making color map
+% % plotting different clusters with different colors
 for i=1:cl
     mask = (W==i);
     y_plot = Y_20(mask,:);
@@ -27,35 +27,4 @@ for i=1:cl
     scatter(y_plot(:,1), y_plot(:,2), 2, cmap(i,:), 'MarkerEdgeAlpha', 0.5)
     hold on
 end
-
-
-% load('dbscan-idx-eps-1.5-mpt-10.mat');
-% color = ['k', 'g', 'b', 'm', 'C4', 'C5', 'C6', 'C7', 'black', 'blue', 'C8', 'gray']
-
-% idx = dbscan(Y_20,1.2, 10);
-load('dbscan-idx-eps-1.5-mpt-10.mat');
-
-iForest=load('../IsolationForest/iForestScores.dat');
-fig = figure();
-clf();
-hold on
-% for i=[1,6,7,8,9]
-for i=1:5
-    
-    mask=(idx==i);
-    histogram(iForest(mask), 'Normalization', 'probability');
-    
-end
-fidpdf = sprintf('iForest-dist-%d-%d.pdf',1,9);
-
-legend('cl-1', 'cl-2', 'cl-3', 'cl-4', 'cl-5') 
-% legend('cl-1', 'cl-6', 'cl-7', 'cl-8', 'cl-9')
-
-% exportgraphics(fig, fidpdf,'ContentType','vector')
-
-
-
-%     gscatter(Y_20(:,1), Y_20(:,2),idx)
-% save('dbscan-idx-eps-1.5-mpt-10','idx');
-
 
