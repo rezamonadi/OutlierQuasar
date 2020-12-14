@@ -9,6 +9,26 @@ import random
 from pandas.plotting import scatter_matrix
 import time
 
+"""
+Arman Irani
+University of California, Riverside
+CS 235 
+Isolation Forest implementation for Outlier Detection in Quasars
+
+References Used:
+
+    Isolation Forest Logic & Pseudocode:
+        {https://ieeexplore.ieee.org/document/4781136}
+
+    Decision Tree construction using Python Dictionary data structure and Path Length evaluation:
+        {https://github.com/karangautam/Decision-Tree-From-Scratch}
+    
+
+
+"""
+
+
+
 def select_value(data,feature):
     """
     First access the maximum and minimum value from the 'randomly' selected feature.
@@ -81,8 +101,8 @@ def partition_data(data, column_part, split_value):
         
 
     """
-    data_greater = data[data[column_part] > split_value]
-    data_less = data[data[column_part] <= split_value]
+    data_greater = data[data[column_part] > split_value]        # Selecting dataframe that is greater than the randomly selected split value
+    data_less = data[data[column_part] <= split_value]          # Selecting dataframe that is less or equal to than the randomly selected split value
    
     return data_greater, data_less
 
@@ -264,7 +284,7 @@ def evaluate_instance(instance,forest):
         
     return paths
     
-def c_factor(n) :
+def c_score(n) :
     """
     Average path length of unsuccesful search in a binary search tree given n points
     
@@ -279,7 +299,7 @@ def c_factor(n) :
         
     """
     return 2.0*(np.log(n-1)+0.5772156649) - (2.0*(n-1.)/(n*1.0))
-def anomaly_score(data_point,forest,n):
+def an_score(data_point,forest,n):
     """
     Anomaly Score calculation
 
@@ -295,15 +315,14 @@ def anomaly_score(data_point,forest,n):
     
     Returns
     -------
-    ~0.5 -- sample does not have any distinct anomaly
-    ~0 -- Normal Instance
-    ~1 -- An anomaly
+    float
+        Anomaly score between 0.0 and 1.0
     """
 
     # Mean depth for an instance
     E = np.mean(evaluate_instance(data_point,forest))
     
-    c = c_factor(n)
+    c = c_score(n)
     
     return 2**-(E/c)
 
@@ -331,7 +350,7 @@ if __name__ == "__main__":
     start_time = time.time()
     an= list()                                                                                      # List to hold anomaly scores for every instance
     for i in range(df.shape[0]):
-        an.append(anomaly_score(df.iloc[[i]],iForest,256))                                          
+        an.append(an_score(df.iloc[[i]],iForest,256))                                          
     print("Time Taken: ", time.time() - start_time)
 
 
