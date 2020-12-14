@@ -25,58 +25,31 @@ References Used:
     
     Isolation Forest C_score
         {https://github.com/mgckind/iso_forest}
-        
+
     Extended Isolation Forest (not implemented but architecture was used as reference)
         {https://github.com/sahandha/eif}
 """
 
 
 
-def select_value(data,feature):
+def split_data(data):
     """
-    First access the maximum and minimum value from the 'randomly' selected feature.
+    This function first selects a random column or "attribute" for sub-sampling purposes. 
+    The binary trees will therefore will all have randomly generated partitions. 
+
+    Then the function accesses the maximum and minimum value from the 'randomly' selected feature.
     Then to get our randomly selected value from within the attributes value range, 
     calculate the difference betweent the max & min and multiply by  randomly selected float 
     between 0 -> 1. Add by the min_split_value in edge case of 'np.random.random() == 0. 
 
-    Parameters
-    ----------
-    data : Pandas Dataframe
-        dataset
-
-    feature: float
-        Feature returned from get_random_attribute
-    Returns
-    --------
-    float
-        random value between [Feature.Min, Feature.Max]
+    Returns random column and random split value
     """
-    min_split_value = data[feature].min()                          # Min value of attribute 
-    max_split_value = data[feature].max()                          # Max value of attribute
+    rand_attribute = random.choice(data.columns)
+    min_split_value = data[rand_attribute].min()                          # Min value of attribute 
+    max_split_value = data[rand_attribute].max()                          # Max value of attribute
     
-    max_min_diff = max_split_value-min_split_value                 # Min/Max Range
-    return max_min_diff*np.random.random() + min_split_value       # Randomly selected split point from sequence of min/max
-
-    
-def get_random_attribute(data):
-    """
-    This function selects a random column or "attribute" for sub-sampling purposes. 
-    The binary trees will therefore will all have randomly generated partitions. 
-
-    Follows assumption of dataframe data structure architecture.
-
-     Parameters
-    ----------
-    data : Pandas Dataframe
-        dataset
-        
-    Returns
-    --------
-    float:
-        random column for columns in dataset
-    
-    """
-    return random.choice(data.columns)
+    max_min_diff = max_split_value-min_split_value                                 # Min/Max Range
+    return rand_attribute, max_min_diff*np.random.random() + min_split_value       # Randomly selected split point from sequence of min/max
 
 def partition_data(data, column_part, split_value):
     """
@@ -104,10 +77,10 @@ def partition_data(data, column_part, split_value):
         
 
     """
-    data_greater = data[data[column_part] > split_value]        # Selecting dataframe that is greater than the randomly selected split value
-    data_less = data[data[column_part] <= split_value]          # Selecting dataframe that is less or equal to than the randomly selected split value
+    data_right = data[data[column_part] > split_value]          # Selecting dataframe that is greater than the randomly selected split value
+    data_left = data[data[column_part] <= split_value]          # Selecting dataframe that is less or equal to than the randomly selected split value
    
-    return data_greater, data_less
+    return data_right, data_left
 
 def make_decision_tree(data, currHeight=0,heightLimit=20):
     """
@@ -138,33 +111,28 @@ def make_decision_tree(data, currHeight=0,heightLimit=20):
         label_column = data.values[:, -1]                                                             # Takes all rows of last column in data
         sorted_unique_values, unique_classes_count = np.unique(label_column, return_counts=True)      # Returns the counts and elements of the sorted unique elements in the retrieved 'label_column' 
         max_index = unique_classes_count.argmax()                                                     # Returns index of sorted unique value that occurs the most 
-        ex_node_value = sorted_unique_values[max_index]                                               # Returns unique value that occurs the most often
+        return sorted_unique_values[max_index]                                                        # Returns unique value that occurs the most often
         
-        return ex_node_value
-
     else:
-        currHeight += 1                                                                 # Variable to keep track of current height in tree
-        split_attribute = get_random_attribute(data)                                    # Select random feature
-        split_value = select_value(data,split_attribute)                                # Select random value to split on between the max and min values of 'split_attribute' in data
-        data_above, data_below = partition_data(data,split_attribute,split_value)       # Filter data with partition
+        split_attribute, split_value = split_data(data)                                 # Select random feature & Select random value to split on between the max and min values of 'split_attribute' in data                                   
+        data_right, data_left = partition_data(data,split_attribute,split_value)        # Filter data with partition
 
         # Instantiate Subtree
         node = "{} <= {}".format(split_attribute,split_value)                           # Set up our node construction to add to our faux decision tree (dict)
         sub_tree = {node: []}                                                           # dict construction
 
-
         # Recursive Logic
-        left = make_decision_tree(data_below,currHeight,heightLimit=heightLimit)
-        right = make_decision_tree(data_above,currHeight,heightLimit=heightLimit)
+        currHeight += 1                                                                 # Variable to keep track of current height in tree
+        left_sub_tree = make_decision_tree(data_left,currHeight,heightLimit=heightLimit)
+        right_sub_tree = make_decision_tree(data_right,currHeight,heightLimit=heightLimit)
 
-        # End of split
-        if(left == right):
-            sub_tree = left
+        if(left_sub_tree == right_sub_tree):
+            sub_tree = left_sub_tree
         
         # Adding nodes to decision tree
         else:
-            sub_tree[node].append(left)  
-            sub_tree[node].append(right)
+            sub_tree[node].append(left_sub_tree)  
+            sub_tree[node].append(right_sub_tree)
 
         """
                     split_attribute
@@ -241,7 +209,6 @@ def get_path_length(data, decision_tree,path=0):
         Depth traversed in decision tree to reach value
     
     """
-    path += 1                                                                  # Incrementing path value each recursive visit
     node = list(decision_tree.keys())[0]                                       # Root Node
     feature, comparison_op, split_value =  node.split()                        
     if data[feature].values <= float(split_value):                             # Choose branch to descend 
@@ -249,7 +216,7 @@ def get_path_length(data, decision_tree,path=0):
     else:
         attr = decision_tree[node][1]
 
-    
+    path += 1                                                                  # Incrementing path value each recursive visit    
     if(not isinstance(attr,dict)):                                             # Equivalent to if T is an external node (leaf)
         return path                                                            # Base case of recursion
     
@@ -286,7 +253,9 @@ def evaluate_instance(instance,forest):
     
 def c_score(n) :
     """
-    Average path length of unsuccesful search in a binary search tree given n points
+    If the number of data points is equal to 2 then return 1.0
+    If the number is < 2.0 return 0
+    Else return the average path length of unsuccesful search in a binary search tree given n points
     
     Parameters
     ----------
@@ -298,7 +267,12 @@ def c_score(n) :
         Average path length of unsuccesful search in a decision tree
         
     """
-    return 2.0*(np.log(n-1)+0.5772156649) - (2.0*(n-1.)/(n*1.0))
+    if(n==2):
+        return 1.0
+    if(n>2):
+        return 2.0*(np.log(n-1)+0.5772156649) - (2.0*(n-1.0)/(n*1.0))
+    else:
+        return 0.0
 
 def an_score(data_point,forest,n):
     """
@@ -320,12 +294,8 @@ def an_score(data_point,forest,n):
         Anomaly score between 0.0 and 1.0
     """
 
-    # Mean depth for an instance
-    E = np.mean(evaluate_instance(data_point,forest))
     
-    c = c_score(n)
-    
-    return 2**-(E/c)
+    return 2**-((np.mean(evaluate_instance(data_point,forest)))/c_score(n))
 
 def path_length(data_point,forest,n):
     """
@@ -333,10 +303,8 @@ def path_length(data_point,forest,n):
 
         For plotting purposes only.
     """
-    # Mean depth for an instance
-    E = np.mean(evaluate_instance(data_point,forest))
      
-    return E
+    return np.mean(evaluate_instance(data_point,forest))
 
 
 if __name__ == "__main__":
