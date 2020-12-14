@@ -226,22 +226,19 @@ def get_path_length(data, decision_tree,path=0):
     data : Pandas Dataframe
         Dataset
 
-    numTrees: int
-        Number of trees to construct
+    decision_tree: dict
+        Decision tree implementation for the value
     
-    heightLimit: int
-        Variable that sets the maximum depth of the tree
-
-    samplingSize: int
-        Sample size of data to take
+    path: int
+        Tree depth counter
         
     Returns
     --------
-    forest_ensemble: list
-        Decision trees(dict)
+    path: int
+        Depth traversed in decision tree to reach value
     
     """
-    path += 1
+    path += 1                                                                  # Incrementing path value each recursive visit
     node = list(decision_tree.keys())[0]                                       # Root Node
     feature, comparison_op, split_value =  node.split()                        
     if data[feature].values <= float(split_value):                             # Choose branch to descend 
@@ -299,6 +296,7 @@ def c_score(n) :
         
     """
     return 2.0*(np.log(n-1)+0.5772156649) - (2.0*(n-1.)/(n*1.0))
+
 def an_score(data_point,forest,n):
     """
     Anomaly Score calculation
