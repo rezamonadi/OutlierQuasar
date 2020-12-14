@@ -1,6 +1,6 @@
-load('dbscan-idx-eps-1.5-mpt-10.mat');
+load('../dbscan/dbscan-idx-eps-1.5-mpt-10.mat');
 
-iForest=load('../IsolationForest/iForestScores.dat');
+iForest=load('Outliers.txt');
 fig = figure();
 clf();
 hold on
