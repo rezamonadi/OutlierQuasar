@@ -306,10 +306,9 @@ def path_length(data_point,forest,n):
      
     return np.mean(evaluate_instance(data_point,forest))
 
-
+import pandas as pd
 if __name__ == "__main__":
-    data = ascii.read("C:/Users/arman/Workspace/OutlierQuasar/data.dat",guess=False)                # Using astropy.io to read in large data file
-    df = data.to_pandas()                                                                           # Converting to Pandas to use for this implementation
+    df = pd.read_csv("../data/data_scaled.csv")                # Using astropy.io to read in large data file
     
     start_time = time.time()    
     iForest = isolationForest(df,20, 150,256)                                                       # Creating the forest
