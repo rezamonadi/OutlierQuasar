@@ -20,11 +20,14 @@ References Used:
     Isolation Forest Logic & Pseudocode:
         {https://ieeexplore.ieee.org/document/4781136}
 
-    Decision Tree construction using Python Dictionary data structure and Path Length evaluation:
+    Decision Tree implementation using Python Dictionary data structure and Path Length evaluation:
         {https://github.com/karangautam/Decision-Tree-From-Scratch}
     
-
-
+    Isolation Forest C_score
+        {https://github.com/mgckind/iso_forest}
+        
+    Extended Isolation Forest (not implemented but architecture was used as reference)
+        {https://github.com/sahandha/eif}
 """
 
 
@@ -205,11 +208,11 @@ def isolationForest(data,numTrees,heightLimit, samplingSize):
 
     forest_ensemble=list()
     for i in range(numTrees):
-        data = data.sample(samplingSize)                             # Random selection of attributes
-        decision = make_decision_tree(data,heightLimit=numTrees)     # Tree creation
-        forest_ensemble.append(decision)                             # Adding tree to ensemble
+        data = data.sample(samplingSize)                                # Random selection of attributes
+        decision = make_decision_tree(data,heightLimit=heightLimit)     # Tree creation
+        forest_ensemble.append(decision)                                # Adding tree to ensemble
         
-    return forest_ensemble                                           # Return an ensemble of trees
+    return forest_ensemble                                              # Return an ensemble of trees
 
 
 
