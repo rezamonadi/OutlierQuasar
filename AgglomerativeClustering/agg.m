@@ -1,4 +1,4 @@
-T = readtable('data.dat');%read data file
+T = readtable('../data/data_scaled.csv');%read data file
 K = table2array(T);%put into array
 numberOfDimensions = 3;%set num of dimensions to 3
 [COEFF, SCORE, LATENT, TSQUARED, EXPLAINED] = pca(K); % Perform PCA analysis

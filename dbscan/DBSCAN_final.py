@@ -23,7 +23,7 @@ from sklearn.neighbors import KDTree
 
 #generate datasets
 def CreateDataset():
-    tab = Table.read('DR16Q_v4.fits')
+    tab = Table.read('..data/DR16Q_v4.fits')
     tab.colnames
     psfmag = np.array(tab['PSFMAG'])
     u = psfmag[:,0]
@@ -189,34 +189,4 @@ filt=(pca_df['cluster']<1)
 ax = sns.scatterplot(x="pca1", y="pca2", hue = "cluster", data = pca_df)
 plt.show()
 print(len(outlier))
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[8]:
-
-
-print(test.head())
-
-
-# In[3]:
-
-
-print(Data.head())
-
-
-# In[ ]:
-
-
-
 
